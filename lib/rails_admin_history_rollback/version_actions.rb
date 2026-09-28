@@ -16,7 +16,7 @@ module RailsAdminHistoryRollback
     def handle_version_request(object)
       @version = @auditing_adapter.version_for(@abstract_model, object, params[:version_id]) if @auditing_adapter
 
-      if request.get?
+      if request.get? || request.head?
         if @version
           render partial: 'version', layout: false
         else
