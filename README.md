@@ -1,5 +1,9 @@
 # Rails Admin History Rollback
 
+## Fork
+
+This is `pastureio/rails_admin_history_rollback`, forked from `hendra/rails_admin_history_rollback` @ `fcbe0179` (itself from `jemcode/rails_admin_history_rollback`), and version lookups are scoped to the model (collection screen) or record (member screen) since this fix.
+
 [![Gem Version](https://badge.fury.io/rb/rails_admin_history_rollback.svg)](http://badge.fury.io/rb/rails_admin_history_rollback)
 [![Code Climate](https://codeclimate.com/github/rikkipitt/rails_admin_history_rollback/badges/gpa.svg)](https://codeclimate.com/github/rikkipitt/rails_admin_history_rollback)
 

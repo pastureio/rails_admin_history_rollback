@@ -2,7 +2,7 @@
     id="version" 
     class="table table-striped" 
     data-title= "<%= @abstract_model %> version #<%= @version.index + 1 %> <small>[<%= @version.event %>]</small>"
-    data-rollbackurl = <%= url_for(action: action(:history_index, @abstract_model).action_name, model_name: @abstract_model.to_param, version_id: @version.id) %>
+    data-rollbackurl="<%= history_version_path(@version.id) %>"
     data-rollback = <%= t("admin.history_rollback.table_headers.rollback") %>
     data-cancel = <%= t("admin.history_rollback.cancel") %>
     data-confirm = <% t("admin.history_rollback.confirm") %>

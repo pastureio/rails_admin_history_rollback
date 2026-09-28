@@ -22,46 +22,12 @@ module RailsAdmin
 
         register_instance_option :controller do
           proc do
-            @general = true
-            @history = @auditing_adapter&.listing_for_model(@abstract_model, params[:query], params[:sort], params[:sort_reverse], params[:all], params[Kaminari.config.param_name]) || []
-
-            version_class = @abstract_model.model.paper_trail_options.dig(:versions, :class_name).try(:constantize) || ::PaperTrail::Version
-            @version = version_class.find(params[:version_id]) if params[:version_id] rescue false
-
-            if request.get? # SHOW
-              if @version
-                render partial: 'version', layout: false
-              else
-                render @action.template_name
-              end
-
-            elsif request.put? # ROLLBACK
-              begin
-                if @version.event == "create"
-                  @record = @version.item_type.constantize.find(@version.item_id)
-                  @result = @record.destroy
-                else
-                  @record = @version.reify
-                  @result = @record.save
-                end
-
-                if @result
-                  if @version.event == "create"
-                    flash[:success] = t 'admin.history_rollback.rollback_destroy'
-                  else
-                    flash[:success] = t 'admin.history_rollback.rollback_success'
-                  end
-                else
-                  flash[:error] = t 'admin.history_rollback.rollback_impossible'
-                end
-              rescue ActiveRecord::RecordNotFound
-                flash[:error] = t 'admin.history_rollback.version_not_found'
-                redirect_to :action => :history_index
-              rescue ActiveRecord::InvalidForeignKey
-                flash[:error] = t 'admin.history_rollback.rollback_violates_foreign_key'
-              end
-
-              redirect_to :action => :history_index
+            if params.key?(:version_id) || request.put?
+              handle_version_request(nil)
+            else
+              @general = true
+              @history = @auditing_adapter&.listing_for_model(@abstract_model, params[:query], params[:sort], params[:sort_reverse], params[:all], params[Kaminari.config.param_name]) || []
+              render @action.template_name
             end
           end
         end
