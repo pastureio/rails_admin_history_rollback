@@ -6,5 +6,9 @@ module RailsAdminHistoryRollback
         'rails_admin/ra.history.css'
       ]
     end
+
+    config.to_prepare do
+      RailsAdmin::MainController.send(:include, RailsAdminHistoryRollback::VersionActions)
+    end
   end
 end

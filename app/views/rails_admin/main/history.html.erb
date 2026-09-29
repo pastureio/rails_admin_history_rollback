@@ -78,7 +78,7 @@
           <%= object.message.in?(['delete', 'new']) ? t("admin.actions.#{object.message}.done").capitalize : object.message %>
         </td>
         <td>
-          <%= link_to(t("admin.history_rollback.table_headers.view_changes"), "#", class: "changeset", :data => {:url => url_for(action: action(:history_index, @abstract_model).action_name, model_name: @abstract_model.to_param, version_id: object.version_id)}) %>
+          <%= link_to(t("admin.history_rollback.table_headers.view_changes"), "#", class: "changeset", data: { url: history_version_path(object.version_id) }) %>
         </td>
       </tr>
     <% end %>
